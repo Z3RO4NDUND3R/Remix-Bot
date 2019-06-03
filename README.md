@@ -14,6 +14,27 @@
     <a href="#credits">Credits</a>
 </p>
 
+## About
+Ionix is a developing advanced economy bot and utility bot for discord. It is currently in heavy development. Development is lead by Threqt. 
+
+Some planned features for Ionix are:
+
+• Stock Market feature
+• Simulated real-life economy feature
+• Easily manipulated economy settings
+• Moderation and more!
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Credits
 
