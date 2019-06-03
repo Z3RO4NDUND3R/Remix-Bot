@@ -23,19 +23,19 @@ Some planned features for Ionix are:
 • Simulated real-life economy feature <br>
 • Easily manipulated economy settings <br>
 • Moderation and more! <br>
-
-
-
-
-
-
-
-
-
-
-
-
-
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 ## Credits
 
 [Threqt](https://github.com/sentanos) - Head Developer in a way
