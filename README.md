@@ -19,10 +19,10 @@ Ionix is a developing advanced economy bot and utility bot for discord. It is cu
 
 Some planned features for Ionix are:
 
-• Stock Market feature
-• Simulated real-life economy feature
-• Easily manipulated economy settings
-• Moderation and more!
+• Stock Market feature <br>
+• Simulated real-life economy feature <br>
+• Easily manipulated economy settings <br>
+• Moderation and more! <br>
 
 
 
