@@ -10,6 +10,7 @@
 </p>
 
 <p align="center">
+    <a href="#about">About</a> •
     <a href="#credits">Credits</a>
 </p>
 
