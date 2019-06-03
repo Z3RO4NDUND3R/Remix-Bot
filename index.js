@@ -25,9 +25,13 @@ bot.on("message", async message => {
   if (cmd === `ping`) {
     const pingEmbed = new Discord.RichEmbed()
       .setColor(embedColor)
-      .setDescription(`:stopwatch: ${client.ping}`)
+      .setDescription(`:stopwatch: ${bot.ping}`)
     message.channel.send(pingEmbed)
   }
-})
+});
+
+bot.on("error", (e) => console.error(e));
+bot.on("warn", (e) => console.warn(e));
+bot.on("debug", (e) => console.info(e));
 
 bot.login(config.token);
