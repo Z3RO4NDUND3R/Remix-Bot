@@ -8,6 +8,8 @@ const embedColor = '#000000'
 
 //Async functions
 
+
+
 //Startup events
 bot.on("ready", async () => {
   console.log(`${bot.user.username} is online!`);
