@@ -13,7 +13,7 @@ bot.on("ready", async () => {
   console.log(`${bot.user.username} is online!`);
 });
 
-//Command events
+
 bot.on("message", async message => {
   if (message.author.bot) return;
 
