@@ -14,7 +14,7 @@ const db = require('quick.db')
 //Startup events
 bot.on("ready", async () => {
   console.log(`${bot.user.username} is online!`);
-  bot.user.setActivity("a risky game", {
+  bot.user.setActivity("a risky game | Made by Threqt#477", {
     type: "PLAYING"
   });
 });
