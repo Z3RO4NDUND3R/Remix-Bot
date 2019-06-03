@@ -15,7 +15,7 @@
 </p>
 
 ## About
-Ionix is a developing advanced economy bot and utility bot for discord. It is currently in heavy development. Development is lead by Threqt. 
+Ionix is a developing advanced economy bot and utility bot for discord. It is currently in heavy development. Development is led by Threqt. 
 
 Some planned features for Ionix are:
 
