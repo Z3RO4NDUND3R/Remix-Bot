@@ -5,6 +5,7 @@ const bot = new Discord.Client({
   disableEverybody: true
 })
 const embedColor = '#000000'
+const db = require('quick.db')
 
 //Async functions
 
@@ -13,7 +14,7 @@ const embedColor = '#000000'
 //Startup events
 bot.on("ready", async () => {
   console.log(`${bot.user.username} is online!`);
-  bot.user.setActivity("a risky game.", {
+  bot.user.setActivity("a risky game", {
     type: "PLAYING"
   });
 });
