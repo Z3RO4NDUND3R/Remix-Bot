@@ -9,6 +9,17 @@
   "author": "Threqt",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^11.5.1"
-  }
+    "discord.js": "^11.5.1",
+    "quick.db": "^7.0.0-b22"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Threqt/Ionix.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/Threqt/Ionix/issues"
+  },
+  "homepage": "https://github.com/Threqt/Ionix#readme"
 }
