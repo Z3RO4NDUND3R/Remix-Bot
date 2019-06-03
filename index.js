@@ -13,6 +13,9 @@ const embedColor = '#000000'
 //Startup events
 bot.on("ready", async () => {
   console.log(`${bot.user.username} is online!`);
+  bot.user.setActivity("a risky game.", {
+    type: "PLAYING"
+  });
 });
 
 
