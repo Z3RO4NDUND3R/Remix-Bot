@@ -31,7 +31,7 @@ bot.on("message", async message => {
   if (cmd === `ping`) {
     const pingEmbed = new Discord.RichEmbed()
       .setColor(embedColor)
-      .setDescription(`:stopwatch: ${bot.ping}`)
+      .setDescription(`:stopwatch: ${Math.floor(bot.ping)}`)
     message.channel.send(pingEmbed)
   }
 });
