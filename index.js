@@ -1,45 +1,38 @@
 //Init vars
-const config = require("./botconfig")
 const Discord = require("discord.js");
 const bot = new Discord.Client({
   disableEverybody: true
 })
+const config = require("./botconfig")
+bot.config = config;
 const embedColor = '#000000'
 const db = require('quick.db')
-
+const Enmap = require("enmap");
+const fs = require("fs");
 //Async functions
 
 
 
-//Startup events
-bot.on("ready", async () => {
-  console.log(`${bot.user.username} is online!`);
-  bot.user.setActivity("a risky game | Made by Threqt#477", {
-    type: "PLAYING"
+fs.readdir("./events/", (err, files) => {
+  if (err) return console.error(err);
+  files.forEach(file => {
+    const event = require(`./events/${file}`);
+    let eventName = file.split(".")[0];
+    bot.on(eventName, event.bind(null, bot));
   });
 });
 
+bot.commands = new Enmap();
 
-bot.on("message", async message => {
-  if (message.author.bot) return;
-
-  if (message.content.indexOf(config.prefix) !== 0) return;
-
-  const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
-  const cmd = args.shift().toLowerCase();
-
-  if (cmd === `ping`) {
-    const pingEmbed = new Discord.RichEmbed()
-      .setColor(embedColor)
-      .setDescription(`:stopwatch: ${Math.floor(bot.ping)}`)
-    message.channel.send(pingEmbed)
-  }
+fs.readdir("./commands/", (err, files) => {
+  if (err) return console.error(err);
+  files.forEach(file => {
+    if (!file.endsWith(".js")) return;
+    let props = require(`./commands/${file}`);
+    let commandName = file.split(".")[0];
+    console.log(`Attempting to load command ${commandName}`);
+    bot.commands.set(commandName, props);
+  });
 });
 
-//Logging stuff
-bot.on("error", (e) => console.error(e));
-bot.on("warn", (e) => console.warn(e));
-bot.on("debug", (e) => console.info(e));
-
-//Logs into the bot user
 bot.login(config.token);
