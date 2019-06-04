@@ -1,4 +1,3 @@
-//Init vars
 const Discord = require("discord.js");
 const bot = new Discord.Client({
   disableEverybody: true
@@ -9,7 +8,7 @@ const embedColor = '#000000'
 const db = require('quick.db')
 const Enmap = require("enmap");
 const fs = require("fs");
-//Async functions
+
 
 
 
