@@ -25,6 +25,9 @@ bot.on("guildMemberAdd", async member => {
   db.set(`rpgInfo_${member.user.id}.started`, false)
 })
 
+bot.on("error", (e) => console.error(e));
+bot.on("warn", (e) => console.warn(e));
+bot.on("debug", (e) => console.info(e));
 
 bot.on("message", async message => {
   if (message.author.bot) return;
@@ -84,11 +87,12 @@ bot.on("message", async message => {
     if (!message.member.highestRole.position >= role.position) {
       return message.channel.send("Insufficient Permissions")
     }
-
+    if (kUser.user.id == message.author.id) {
+      return message.channel.send("Cannot Kick Yourself!!")
+    }
     if (kUser.highestRole.position >= message.member.highestRole.position) {
       return message.channel.send("Can't kick this person!")
     }
-
     let kickEmbed = new Discord.RichEmbed()
       .setColor(embedColor)
       .setDescription(`Kicked  User: ${kUser} with ID ${kUser.id} \nKicked By: <@${message.author.id}> with ID ${message.author.id} \nKicked In: ${message.channel.name} \nKick Time: ${message.createdAt} \nKick Reason: ${kReason}`)
@@ -96,14 +100,60 @@ bot.on("message", async message => {
     message.guild.member(kUser).kick(kReason);
     return message.channel.send(kickEmbed);
   } else
+  if (cmd === `ban`) {
+    let bUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+    if (!bUser) return message.channel.send("Can't find user!");
+    let bReason = args.join(" ").slice(22);
+    let role = message.member.guild.roles.find(r => r.name === "Moderator")
+    if (!message.member.highestRole.position >= role.position) {
+      return message.channel.send("Insufficient Permissions")
+    }
+    if (bUser.user.id == message.author.id) {
+      return message.channel.send("Cannot Ban Yourself!!")
+    }
+    if (bUser.highestRole.position >= message.member.highestRole.position) {
+      return message.channel.send("Can't ban this person!")
+    }
+    let banEmbed = new Discord.RichEmbed()
+    banEmbed.setcolor(embedColor)
+    banEmbed.setDescription(`Banned User: ${bUser} with ID ${bUser.id} \nBanned By: <@${message.author.id}> with ID ${message.author.id} \nBanned In: ${message.channel.name} \nBanned Time: ${message.createdAt} \nBanned Reason: ${bReason}`)
+
+    message.guild.member(bUser).ban(banReason);
+    return message.channel.send(banEmbed);
+
+  } else
     //Threqt's RPG (Wink)
     if (cmd === `startrpg`) {
-      if(db.fetch(`rpgInfo_${message.author.id}.started`) == true){
+      if (db.fetch(`rpgInfo_${message.author.id}.started`) == true) {
         return message.channel.send("You have already started Ionix RPG!").then(m => m.delete(5000))
+      }
+      if (db.fetch(`rpgInfo_${message.author.id}.started`) == false) {
+        await message.channel.send("Creating profile...")
+        db.set(`rpgInfo_${message.author.id}.started`, true)
+        await message.channel.send('Setting location..')
+        db.set(`rpgInfo_${message.author.id}.locaton`, 'Sedona Town')
+        await message.channel.send('Adding items data..')
+        db.set(`rpgInfo_${message.author.id}.items`, [])
+        let woodenSword = {
+          name: 'Wooden Sword',
+          type: 'Weapon',
+          description: 'A sturdy wooden sword that is used for practice.',
+          stats: {
+            damage: 10,
+            upgrades: 0,
+            upgradesLeft: 7
+          }
+        }
+        db.push(`rpgInfo_${message.author.id}.items`, woodenSword)
+        await message.channel.send("Finishing Up...")
+        db.set(`rpgInfo_${message.author.id}.equippedWeapon`, woodenSword)
+        console.log(db.fetch(`rpgInfo_${message.author.id}.items`))
+        message.channel.send("Initiation complete; Welcome to Ionix RPG.")
       }
     } else
   if (cmd === `resetstats`) {
-    if (args[0].includes('<@') && message.author.id == '280156773682511872') {
+    if (!args[0]) return;
+    if (args[0].includes('<@') && message.author.id == '28015677368251187') {
       let user = message.mentions.users.first()
       if (user.bot) return;
       if (db.fetch(`rpgInfo_${user.id}.started`) == true) {
@@ -112,11 +162,11 @@ bot.on("message", async message => {
           db.delete(`rpgInfo_${user.id}.${key}`)
         });
         db.set(`rpgInfo_${user.id}.started`, false)
-        message.channel.send(`Successfully reset stats for ${user.username}`).then(m => m.delete(5000))
+        message.channel.send(`Successfully reset stats for ${user.username}`)
       } else {
-        message.channel.send(`Could not reset stats for ${user.username} because the user has not started Ionix RPG.`).then(m => m.delete(5000))
+        message.channel.send(`Could not reset stats for ${user.username} because the user has not started Ionix RPG.`)
       }
-    }
+    } else
     if (args[0].toLowerCase() == 'allguild' && message.author.id == '280156773682511872') {
       let guildname = message.content.toLowerCase().slice(message.content.toLowerCase().indexOf('allguild') + 9, message.content.size)
       let guild = bot.guilds.find(g => g.name.toLowerCase() == guildname.toLowerCase())
@@ -140,9 +190,5 @@ bot.on("message", async message => {
     }
   }
 });
-
-bot.on("error", (e) => console.error(e));
-bot.on("warn", (e) => console.warn(e));
-bot.on("debug", (e) => console.info(e));
 
 bot.login(config.token);
