@@ -7,6 +7,7 @@ const embedColor = '#000000'
 const db = require('quick.db')
 const chalk = require('chalk')
 const moment = require('moment')
+const ms = require('parse-ms')
 
 bot.on('ready', async () => {
   console.log(`${bot.user.username} is online!`);
@@ -14,6 +15,10 @@ bot.on('ready', async () => {
     type: "PLAYING"
   });
 });
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 function getRandomInt(min, max) {
   min = Math.ceil(min);
@@ -120,6 +125,36 @@ bot.on("message", async message => {
 
     message.guild.member(bUser).ban(banReason);
     return message.channel.send(banEmbed);
+
+  } else
+  if(cmd === `mute`){
+let tomute = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+  if(!tomute) return message.reply("Couldn't find user.");
+   let role = message.memeber.guild.roles.find(r => r.name === "Moderator")
+   if(!message.member.highestRole.position >= role.position){
+     return message.channel.send("Insufficient Permissions")
+       let muterole = message.guild.roles.find(`name`, "muted");
+       if(!muterole){
+         try{
+           muterole = await message.guild.createRole({
+             name: "muted",
+             color: "#000000",
+             permissions:[]
+           })
+           message.guild.channels.forEach(async (channel, id) => {
+             await channel.overwritePermissions(muterole,{
+               SEND_MESSAGES: false,
+               ADD_REACTIONS: false
+             });
+           }
+         }
+       }
+   }
+   let mutetime = args[1];
+   if(!mutetime) return message.reply("You didn't specify a time!");
+
+   await(tomute.addRole(muterole.id));
+   message.reply(`<@${tomute.id}> has been muted for ${ms(ms(mutetime))}`);
 
   } else
     //Threqt's RPG (Wink)
