@@ -226,4 +226,4 @@ let tomute = message.guild.member(message.mentions.users.first() || message.guil
   }
 });
 
-bot.login(config.token);
+bot.login(config.NzU3OTY4MDY1NzM5ODgyNTk3.X2oGxQ.DWDXda__xDQEkKqqaGl20lN-AkE);
